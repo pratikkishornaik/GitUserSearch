@@ -8,7 +8,7 @@ export class Page extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.state = {};
+		this.state = {resp:[]};
 		this.onSearchTextChange = this.onSearchTextChange.bind(this);
 	}
 
@@ -20,7 +20,7 @@ export class Page extends React.Component {
 		self.setState({resp:response.data.items})
 		});
 	
-	}
+	}	
 
 	render(){
 		return(

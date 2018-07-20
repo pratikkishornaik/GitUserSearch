@@ -2,14 +2,10 @@
 
 export class Card extends React.Component{
 
-  constructor(props){
-   
-    super(props);
-    console.log("sadsad");
-  } 
-
   render(){
-    console.log((this.props.users));
+
+    console.log(JSON.stringify(this.props.users));
+
     return(
         <div className="shadow p-4 mb-4 bg-white">
           <div className="row">
