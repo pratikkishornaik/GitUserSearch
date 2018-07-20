@@ -10,7 +10,7 @@ export class Search extends React.Component{
 
 	 handleClick(e){
 	 	this.props.handleSearchTextChange(document.getElementById("textbox").value);
-
+ 
 	}
 
 	render(){

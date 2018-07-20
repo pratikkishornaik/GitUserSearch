@@ -3,17 +3,13 @@
 export class Card extends React.Component{
 
   constructor(props){
-    debugger;
+   
     super(props);
-  }
-
-
-  componentDidMount(){
-    console.log(this.props.users);
     console.log("sadsad");
-  }
+  } 
 
   render(){
+    console.log((this.props.users));
     return(
         <div className="shadow p-4 mb-4 bg-white">
           <div className="row">

@@ -3,7 +3,7 @@ import {Sort} from './Sort';
 import {Search} from './Search';
 import {HttpService} from './HttpService';
 import {Card} from './Card';
-var resp;
+var resp; 
 export class Page extends React.Component {
 
 	constructor(props){
@@ -17,7 +17,7 @@ export class Page extends React.Component {
 	var url=`https://api.github.com/search/users?q=${query}`;
 		HttpService(url).then(function(response){
 		console.log(response.data);
-		self.setState({resp:response.data})
+		self.setState({resp:response.data.items})
 		});
 	
 	}
