@@ -4,42 +4,25 @@ export class Paginations extends React.Component{
     
     constructor(props){
         super(props);
-        this.state={activePage:null,};
-
+        this.state={activePage:1,};
         this.onPageClick=this.onPageClick.bind(this);
     }
 
     generatePageLinks(text,number){
-    return(<li key={number} className="page-item " ><a key={number} onClick={this.onPageClick} className="page-link"  >{text}</a></li>);                        
-    //href={`https://api.github.com/search/users?per_page=10&q=${this.props.query}&page=${number}`}
+      return(this.state.activePage==number? (<li key={number} className="page-item active " ><a key={number} onClick={this.onPageClick} className="page-link"  >{text}</a></li>):
+    (<li key={number} className="page-item " ><a key={number} onClick={this.onPageClick} className="page-link"  >{text}</a></li>));                        
     }
     
     onPageClick(e){
-       
-        this.props.onPageChange(this.props.query,e.target.text );
+       this.setState({activePage:e.target.text});
+       e.target.text=='Previous' ?this.props.onPageChange(this.props.query,--this.state.activePage)(this.setState({activePage:--this.state.activePage})):this.props.onPageChange(this.props.query,e.target.text );
+       e.target.text=='Next' ?this.props.onPageChange(this.props.query,++this.state.activePage)(this.setState({activePage:++this.state.activePage})):this.props.onPageChange(this.props.query,e.target.text );
+
     }
     
-    
-    renderPagination(count){
-        let i=0;
-         while(i<count){
-         }
+    fetchPageLinks()
+    {
 
-        return(
-            <div>
-                <ul class="pagination float-right">
-
-                {/* <li class="page-item"><a class="page-link" href="">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li className="page-item"><a class="page-link" href="#">...</a> </li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li> */}
-            </ul>
-           </div>
-        );
     }
 
     render()
@@ -47,15 +30,16 @@ export class Paginations extends React.Component{
         var content=[];
       var noofpages= (Math.ceil(this.props.total_results/10)) ;
       
-       //content.push('<div><ul className="pagination float-right">');
+      for (index = 1; index <= (noofpages > 5 ? 5:noofpages) ; index ++) {
+        
+        content.push(this.generatePageLinks(index,index));
 
-      for (index = 1; index <= (noofpages > 100 ? 100:noofpages) ; index ++) {
-          
-          content.push(this.generatePageLinks(index,index));
       }
         return(
         <div><ul className="pagination float-right">
+        <li  className="page-item  " ><a  onClick={this.onPageClick} className="page-link"  >Previous</a></li>
         {content}
+        <li  className="page-item " ><a  onClick={this.onPageClick} className="page-link"  >Next</a></li>
         </ul> </div>
         );
    
