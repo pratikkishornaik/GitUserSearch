@@ -10,13 +10,13 @@ export class Paginations extends React.Component{
     }
 
     generatePageLinks(text,number){
-    return(<li key={number} className="page-item " ><a key={number} onClick={this.onPageClick}className="page-link"  >{text}</a></li>);                        
+    return(<li key={number} className="page-item " ><a key={number} onClick={this.onPageClick} className="page-link"  >{text}</a></li>);                        
     //href={`https://api.github.com/search/users?per_page=10&q=${this.props.query}&page=${number}`}
     }
     
     onPageClick(e){
-            
-        this.props.onPageChange(this.props.query);
+       
+        this.props.onPageChange(this.props.query,e.target.text );
     }
     
     
