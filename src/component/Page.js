@@ -3,21 +3,26 @@ import {Sort} from './Sort';
 import {Search} from './Search';
 import {HttpService} from './HttpService';
 import {Card} from './Card';
-var resp; 
+import {Paginations} from './Pagination';
+
 export class Page extends React.Component {
 
 	constructor(props){
 		super(props);
-		this.state = {resp:[]};
+		this.state = {resp:[],page_count:null,query_text:null};
 		this.onSearchTextChange = this.onSearchTextChange.bind(this);
 	}
 
 	onSearchTextChange(query){
 		let self = this;
-	var url=`https://api.github.com/search/users?q=${query}`;
+	var url=`https://api.github.com/search/users?per_page=10&q=${query}`;
 		HttpService(url).then(function(response){
 		console.log(response.data);
-		self.setState({resp:response.data.items})
+		self.setState({resp:response.data.items,
+			total_results:response.data.total_count,
+			query_text:query,
+			});
+			
 		});
 	
 	}	
@@ -30,15 +35,14 @@ export class Page extends React.Component {
               <li className="nav-item">
                   <Sort />
                 </li>&nbsp;&nbsp;&nbsp;	
-                <Search handleSearchTextChange={this.onSearchTextChange} />
+                <Search handleSearchTextChange={this.onSearchTextChange}  />
               </ul>
             </nav>
-            <div className="jumbotron bg-light">
-            <Card users={this.state.resp} />
+            <div className="jumbotron bg-light" >
+            <Card users={this.state.resp} total_results={this.state.total_results} />
+			<Paginations query={this.state.query_text} total_results={this.state.total_results} />
             </div>
-
         </div>
      );
-
 	}
 }//class
