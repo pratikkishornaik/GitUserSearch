@@ -13,9 +13,10 @@ export class Page extends React.Component {
 		this.onSearchTextChange = this.onSearchTextChange.bind(this);
 	}
 
-	onSearchTextChange(query){
+	onSearchTextChange(query,pageno=1){
 		let self = this;
-	var url=`https://api.github.com/search/users?per_page=10&q=${query}`;
+	var url=`https://api.github.com/search/users?per_page=10&q=${query}&page=${pageno}`;
+	console.log(url);
 		HttpService(url).then(function(response){
 		console.log(response.data);
 		self.setState({resp:response.data.items,
@@ -24,7 +25,6 @@ export class Page extends React.Component {
 			});
 			
 		});
-	
 	}	
 
 	render(){
@@ -40,7 +40,7 @@ export class Page extends React.Component {
             </nav>
             <div className="jumbotron bg-light" >
             <Card users={this.state.resp} total_results={this.state.total_results} />
-			<Paginations query={this.state.query_text} total_results={this.state.total_results} />
+			<Paginations query={this.state.query_text} onPageChange={this.onSearchTextChange} total_results={this.state.total_results} />
             </div>
         </div>
      );
