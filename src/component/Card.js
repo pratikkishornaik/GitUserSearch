@@ -32,7 +32,7 @@
             </div>
 
           <div className="col-md-6">
-            <h3>{this.getName(obj.login)}</h3><br/>
+            <h3>{obj.login}</h3><br/>
             <label>Profile:&nbsp; </label><a target="_blank" href={obj.html_url}>{obj.html_url}</a><br/>
             <label>Score:</label>{  (obj.score).toFixed(2)}<br/>
           </div>

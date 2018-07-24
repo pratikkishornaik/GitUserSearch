@@ -22,7 +22,7 @@ export class Repos extends React.Component{
         {return;}
         let url=`https://api.github.com/users/${this.props.userurl}/repos`;
         HttpService(url).then(function(response){
-          //  console.log(response.data);
+           console.log(response.data);
            self.setState({repoDetails:response.data
                 });
             });
@@ -31,8 +31,8 @@ export class Repos extends React.Component{
     renderRepoRecords(obj){
         return(
             <tr>
-               <td><b>Name:</b></td>
-               <td>{obj.name}</td>
+               <td><b><a href={obj.html_url} target="_blank">{obj.name}</a></b></td>
+               <td>{obj.forks_count}</td>
             </tr>
         );
     }
@@ -49,7 +49,7 @@ export class Repos extends React.Component{
             <table className="table text-center table-striped">
             <tbody>
             <tr><th colSpan="2">Repositories</th></tr>
-            
+            <tr><th>Repo Name</th><th>Fork Count</th></tr>
             {this.state.repoDetails.map(this.renderRepoRecords)}
             </tbody>
             </table>
