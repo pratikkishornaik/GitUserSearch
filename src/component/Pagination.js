@@ -2,6 +2,7 @@ import React from 'react';
 import Pagination from "react-js-pagination";
 // require("bootstrap/less/bootstrap.less");
 import {Card} from './Card';
+
 export class Paginations extends React.Component{
     
     constructor(props){
@@ -14,11 +15,7 @@ export class Paginations extends React.Component{
         this.onPageClick=this.onPageClick.bind(this);
         this.generatePageLinks=this.generatePageLinks.bind(this);
     }
-    componentDidMount()
-    {
-      this.setState({userdata:this.props.users});
-    }
-
+   
     generatePageLinks(index){
     return(this.state.activePage==index ? (<li key={index} className="page-item active" ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>):
     (<li key={index} className="page-item " ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>));                        
@@ -28,10 +25,11 @@ export class Paginations extends React.Component{
       
        this.props.onPageChange(this.props.query,e.target.text);
        this.setState({activePage:e.target.text});
+
     }
-    
-     pagination(c, m) {
+    pagination(c, m) {
       var current = c,
+
           last = m,
           delta = 2,
           left = current - delta,
@@ -39,13 +37,11 @@ export class Paginations extends React.Component{
           range = [],
           rangeWithDots = [],
           l;
-  
       for (let i = 1; i <= last; i++) {
           if (i == 1 || i == last || i >= left && i < right) {
               range.push(i);
           }
       }
-  
       for (let i of range) {
           if (l) {
               if (i - l === 2) {
@@ -57,7 +53,6 @@ export class Paginations extends React.Component{
           rangeWithDots.push(i);
           l = i;
       }
-  
       return rangeWithDots;
   }
   
@@ -68,15 +63,30 @@ export class Paginations extends React.Component{
       var noofpages= (Math.ceil(this.props.total_results/10));
       let pagearray=this.pagination(this.state.activePage,noofpages);
 
-      console.log("active page"+this.state.activePage+"array",pagearray);
-      
+      //console.log("active page "+this.state.activePage+"  array",pagearray);
+        this.state.userdata.sort((a,b)=>{
+            let valueA, valueB;
+            valueA=a.login;
+            valueB=b.login;
+            if(valueA < valueB){
+                return -1;
+            }
+            else if(valueB > valueA){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        });
+        
       content.push(pagearray.map(this.generatePageLinks));
+
         return(
         <div>
           <div className="row">
 	            <div className="col-md-4"></div>
 				<div className="col-md-4">
-				<Card users={this.props.users} total_results={this.props.total_results} />
+       { this.state.userdata.length>0 ? (<Card users={this.state.userdata} total_results={this.props.total_results} />) :	(<Card users={this.props.users} total_results={this.props.total_results} />)}
 				</div>
 				<div className="col-md-4"></div>
 			</div>

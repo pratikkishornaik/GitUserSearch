@@ -17,13 +17,10 @@ export function HttpService(url) {
 		  		}
 		    });
 	});
-
 	promise.then((data) => {
-	  //console.log('Got data! Promise fulfilled.');
 	    return data;
 	}, (error) => {
-	  //console.log('Promise rejected.');
-	  console.log(error.message);
+	  console.log('Error In HTTP Request:',error.message);
 	});
 
 	return promise;

@@ -31,7 +31,7 @@ export class Repos extends React.Component{
     renderRepoRecords(obj){
         return(
             <tr>
-               <td><b><a href={obj.html_url} target="_blank">{obj.name}</a></b></td>
+               <td><a href={obj.html_url} target="_blank">{obj.name}</a></td>
                <td>{obj.forks_count}</td>
             </tr>
         );
@@ -39,17 +39,22 @@ export class Repos extends React.Component{
 
 
     render(){
-
+        let Loading=(<tr><th colSpan="2">Loading...</th></tr>);
+        let heading=(<tr><th>Repo Name</th><th>Fork Count</th></tr>);
         if( this.state.showRepo){
-
         return(
             <div >
                 <button onClick={this.repoToggle} className="btn float-right  btn-primary">Collapse</button><br /><br />
 
             <table className="table text-center table-striped">
+            <thead>
+            
+            </thead>
             <tbody>
             <tr><th colSpan="2">Repositories</th></tr>
-            <tr><th>Repo Name</th><th>Fork Count</th></tr>
+            
+             {(this.state.repoDetails.length === 0) ? Loading:heading} 
+           {/* ()=>(<tr><th colSpan="2">Loading...</th></tr>) */}
             {this.state.repoDetails.map(this.renderRepoRecords)}
             </tbody>
             </table>

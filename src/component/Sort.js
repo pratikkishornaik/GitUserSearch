@@ -12,6 +12,5 @@ export class Sort extends React.Component{
                   </select>
 			);
 	}
-
-
+  
 }

@@ -1,20 +1,23 @@
 import React from 'react';
 import {Sort} from './Sort';
-import {Search} from './Search';
+import Search from './Search';
 import {HttpService} from './HttpService';
 import {Card} from './Card';
+import { connect } from 'react-redux';
+import{bindActionCreators} from 'redux';
 import {Paginations} from './Pagination';
+import {callApi} from '../action/actions';
 
-export class Page extends React.Component {
+  class Page extends React.Component {
 
-	constructor(props){
-		super(props);
+	constructor(){
+		super();
 		this.state = {resp:[],page_count:null,query_text:null};
 		this.onSearchTextChange = this.onSearchTextChange.bind(this);
 	}
 
 	onSearchTextChange(query){
-		let self = this;
+	let self = this;
 	var url=`https://api.github.com/search/users?q=${query}`;
 	console.log(url);
 		HttpService(url).then(function(response){
@@ -34,7 +37,7 @@ export class Page extends React.Component {
               <li className="nav-item">
                   <Sort />
                 </li>&nbsp;&nbsp;&nbsp;	
-                <Search handleSearchTextChange={this.onSearchTextChange}  />
+                <Search />
               </ul>
             </nav>
             <div className="jumbotron bg-light" >
@@ -51,3 +54,20 @@ export class Page extends React.Component {
      );
 	}
 }//class
+
+
+function mapStateToProps(state){
+	console.log("mapsToprops",state);
+	return{
+		userData:state
+	};
+}
+function mapDispatchToProps(dispatch){
+
+	// return({
+	// 	fetchUsers:(query)=>{dispatch({type:'fetch_Users',query:query})},
+	// });
+}
+
+ export default connect(mapStateToProps,mapDispatchToProps)(Page);
+ //export default Page;
