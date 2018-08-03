@@ -1,5 +1,6 @@
 import React from 'react';
 import {Card} from './Card';
+import Sort from './Sort';
 import { connect } from 'react-redux';
 import Loader from './loadercomp';
 import { callApi } from '../action/actions';
@@ -72,6 +73,7 @@ class Paginations extends React.Component{
         let loadcomp=(<Loader />);
     return(
         <div>
+            <Sort />
           <div className="row">
 	            <div className="col-md-3"></div>
 				<div className="col-md-6">

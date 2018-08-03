@@ -7,7 +7,8 @@ class Sort extends React.Component{
 
 
   handleSelection(e){
-    this.props.sortUserData(e.target.value,this.props.userData);
+  this.props.sortUserData(e,this.props.userData);
+  console.log("event",e);
   }
 
 
@@ -19,12 +20,25 @@ class Sort extends React.Component{
     }
     else{
         return(
-          <select  className="form-control" onChange={this.handleSelection.bind(this)} > 
-                        <option value="sortByAZ">Name (A-Z)</option>
-                        <option value="sortByZA">Name (Z-A)</option>
-                        <option value="sortByRankAsc">Rank ascending</option>
-                        <option value="sortByRankDec">Rank descending</option>
-                      </select>
+          <nav className="navbar navbar-expand-sm bg-light justify-content-left">
+                <span className="nav-text">
+                Sort By:
+                </span>
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <a className="nav-link" onClick={()=>this.handleSelection('sortByAZ')} href="#">A-Z</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" onClick={()=>this.handleSelection('sortByZA')} href="#">Z-A</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" onClick={()=>this.handleSelection('sortByRankAsc')} href="#">Score Rank Ascending </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" onClick={()=>this.handleSelection('sortByRankDec')} href="#">Score Rank Descending </a>
+                    </li>
+                </ul>
+            </nav>
           );
         }
   }

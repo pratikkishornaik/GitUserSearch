@@ -24,11 +24,11 @@ class Search extends React.Component{
 
 	render(){
 		return(
-			<form 
+			<form className="form-inline"
 			onSubmit={this.handleClick}>
 			<span>
 			<li className="nav-item">
-	        <input required type="text" id="textbox" placeholder="Enter UserName"  className="form-control"/>
+	        <input required type="text" id="textbox" placeholder="Enter UserName"  className="form-control"/>&nbsp;&nbsp;
 	        <input type="submit" className="btn btn-success float-right" value="Search" />
 	        </li>
 	        </span>
