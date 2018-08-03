@@ -1,36 +1,32 @@
 import React from 'react';
 import {Card} from './Card';
 import { connect } from 'react-redux';
-
+import Loader from './loadercomp';
 class Paginations extends React.Component{
-    
+
     constructor(props){
         super(props);
-
+        
         this.state={
         activePage:1,
-        lastpage:4,
-        };
+        lastpage:4,};
 
         this.onPageClick=this.onPageClick.bind(this);
         this.generatePageLinks=this.generatePageLinks.bind(this);
     }
    
     generatePageLinks(index){
-    return(this.state.activePage==index ? (<li key={index} className="page-item active" ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>):
-    (<li key={index} className="page-item " ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>));                        
+        return(this.state.activePage==index ? (<li key={index} className="page-item active" ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>):
+        (<li key={index} className="page-item " ><a key={index} onClick={()=>this.onPageClick(index)} className="page-link"  >{index}</a></li>));                        
     }
     
     onPageClick(e){
-      
-       this.props.onPageChange(this.props.query,e.target.text);
-       this.setState({activePage:e.target.text});
-
+    console.log("index",e);
+    this.setState({activePage:e});
     }
 
     pagination(c, m) {
       var current = c,
-
           last = m,
           delta = 2,
           left = current - delta,
@@ -58,30 +54,31 @@ class Paginations extends React.Component{
   }
   
      render()
-    {   let index;
-     var content=[];
-      var noofpages= (Math.ceil(this.props.users.length/10));
-      let pagearray=this.pagination(this.state.activePage,noofpages);
-    //   console.log("active page "+this.state.activePage+"  array",pagearray);
+    {   
+        var content=[];
+        var noofpages= (Math.ceil(this.props.total_results/10));
+        let pagearray=this.pagination(this.state.activePage,noofpages);
         content.push(pagearray.map(this.generatePageLinks));
-      
+        let card=(
+                    <div>
+                        <Card users={this.props.users} loading={this.props.loading} total_results={this.props.total_results}/>
+                        <ul className="pagination float-right">
+                        {content}
+                        </ul> 
+                    </div>
+            );
+
+        let loadcomp=(<Loader />);
     return(
         <div>
-            
           <div className="row">
 	            <div className="col-md-3"></div>
 				<div className="col-md-6">
-               
-                <Card users={this.props.users} loading={this.props.loading} total_results={this.props.users.length}/>
+                {this.props.loading?loadcomp: card}
 				</div>
 				<div className="col-md-3"></div>
 			</div>
-          
-          <ul className="pagination float-right">
-        {/* <li  className="page-item  " ><a  onClick={this.onPageClick} className="page-link"  >Previous</a></li> */}
-        {content}
-        {/* <li  className="page-item " ><a  onClick={this.onPageClick} className="page-link"  >Next</a></li> */}
-        </ul> </div>
+        </div>
         );
     }
 }//class
@@ -89,7 +86,8 @@ class Paginations extends React.Component{
 function mapStateToProps(state){
     return{
         users:state.rootReducer.userData,
-        loading:state.rootReducer.loading
+        loading:state.rootReducer.loading,
+        total_results:state.rootReducer.total_results,
     };
 }
 export default connect(mapStateToProps,null)(Paginations);

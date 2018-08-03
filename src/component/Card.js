@@ -1,6 +1,5 @@
   import React from 'react';
   import Repos from './Repos';
-  import Loader from './loadercomp';
   export class Card extends React.Component{
     constructor(){
       super();
@@ -34,13 +33,11 @@
   
 
   render(){
-    let loadcomp=(< Loader />);
+    
     var total_count=(<span><br /><strong>Total Results: {this.props.total_results} </strong><br /></span>);
 
     return(
       <div>
-      <loader />
-      {this.props.loading?loadcomp: null}
       {this.props.total_results!=0 ? total_count:(null) }
       {this.props.users.map(this.renderComponents)}
     </div>

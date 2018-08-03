@@ -5,13 +5,14 @@ export const fetchRepo='fetchRepo';
 export const sortData='sortData';
 export const loader='callLoader';
 
-const URL=`https://api.github.com/search/users`;
+const URL=`https://api.github.com/search/users?per_page=10`;
 
 export function callApi(query) {
   console.log("call API",query);
-  let request=axios.get(`${URL}?q=${query}`);
+  let request=axios.get(`${URL}&q=${query}`);
     return(dispatch)=>{
       request.then(({data})=>{
+        console.log(data);
         dispatch({
           type:fetchUser,
           payload:data,
@@ -31,14 +32,12 @@ export function callApi(query) {
           payload:data,
         })
       });
-      
     }
   }
 
   export function sortUserData(sorttype,userData){
-    // console.log(sorttype,userData);
       switch(sorttype){
-
+ 
         case 'sortByAZ':{
           userData.sort((a,b)=>{
                 let valueA, valueB;
@@ -46,42 +45,37 @@ export function callApi(query) {
                 valueB=b.login;
            return valueA.localeCompare(valueB);
         });
-        // console.log("sortedAZ=",userData);
         return{type:sortData,payload:userData};
       }
-
         case 'sortByZA':{
-
-          userData.sort((a,b)=>{
-            let valueA, valueB;
-            valueA=a.login;
-            valueB=b.login;
-            return valueB.localeCompare(valueA);
-        });
-        // console.log("sortedZA=",userData);
-        return{type:sortData,payload:userData};
+            userData.sort((a,b)=>{
+              let valueA, valueB;
+              valueA=a.login;
+              valueB=b.login;
+              return valueB.localeCompare(valueA);
+            });
+            return{type:sortData,payload:userData};
         }
 
         case 'sortByRankAsc':{
-          userData.sort((a,b)=>{
-            let valueA,valueB
-            valueA=a.score;
-            valueB=b.score;
-            if(valueA<valueB){
-              return -1;
-            }
-            if(valueA>valueB){
-              return 1;
-            }
-            if(valueA==valueB){
-              return 0;
-            }
-            
-          });
-        return{type:sortData,payload:userData};
+            userData.sort((a,b)=>{
+                let valueA,valueB
+                valueA=a.score;
+                valueB=b.score;
+                if(valueA<valueB){
+                  return -1;
+                }
+                if(valueA>valueB){
+                  return 1;
+                }
+                if(valueA==valueB){
+                  return 0;
+                }
+            });
+            return{type:sortData,payload:userData};
         }
         
-        case 'sortByRafetchUsernkDec':{
+        case 'sortByRankDec':{
           userData.sort((a,b)=>{
             let valueA,valueB
             valueA=a.score;
@@ -103,16 +97,14 @@ export function callApi(query) {
         return{type:sortData,payload:userData};
         }
     }
-
-    
   }
 
-export function callLoader(){
-
-    return {type:loader,
-            loading:true,
-    }
-  
+export function callLoader(query){
+  return {
+          type:loader,
+          loading:true,
+          query:query,
+        }
 }
 
 

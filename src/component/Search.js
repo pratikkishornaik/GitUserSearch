@@ -17,7 +17,7 @@ class Search extends React.Component{
 
 	 handleClick(e){
 		e.preventDefault();
-		this.props.callLoader();
+		this.props.callLoader(document.getElementById('textbox').value);
 		this.props.callApi(document.getElementById('textbox').value);
 		
 	}
@@ -36,10 +36,6 @@ class Search extends React.Component{
 			);
 	}
 }
-
-// function mapStateToProps(state){
-// 		return{userData:state.rootReducer.userData};
-// }
 
 function mapDispatchToProps(dispatch){
 

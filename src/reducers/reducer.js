@@ -4,21 +4,24 @@ const init={
     userData:[],
     repoData:[],
     loading:false,
+    total_results:0,
+    query:' ',
 };
 
 export function rootReducer(state=init,action){
 
     switch(action.type){
+
         case fetchUser:
-        {   //console.log(action.payload.items);
+        {   
             let response=action.payload.items.slice();
-            return{...state,userData:(response),loading:false};
+            return{...state,userData:(response),loading:false,total_results:action.payload.total_count,query:action.query};
         }
 
         case fetchRepo:
-        {   let response;
-             response=action.payload.slice();  
-             console.log("resp=",response,"action=",action);
+        {   
+            let response;
+            response=action.payload.slice();  
             return{...state,repoData:state.repoData.concat(response)};
         }
         case sortData:

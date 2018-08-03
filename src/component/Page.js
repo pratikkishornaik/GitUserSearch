@@ -16,7 +16,7 @@ import Paginations from './Pagination';
                 <Search />
               </ul>
             </nav>
-            <div  >
+            <div>
 			<Paginations/>
             </div>
         </div>
