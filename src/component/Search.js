@@ -12,26 +12,29 @@ class Search extends React.Component{
 		}
 
 	 handleClick(){
-
-	 	//this.props.callApi();
+		
 	}
 
 	render(){
 		return(
+			<form 
+			onSubmit={(e)=>{e.preventDefault();
+			this.props.callApi(document.getElementById('textbox').value)}}>
 			<span>
 			<li className="nav-item">
 	        <input type="text" id="textbox" placeholder="Enter UserName"  className="form-control"/>
-	        </li>
-	        <li className="nav-item" >
-	        <button className="btn btn-success form-control" onClick={()=>this.props.callApi(document.getElementById('textbox').value)}>Search</button>
+	        <input type="submit" className="btn btn-success float-right" value="Search" />
 	        </li>
 	        </span>
+			</form>
 			);
 	}
 }
+
 // function mapStateToProps(state){
 // 		return{userData:state};
 // }
+
 function mapDispatchToProps(dispatch){
 
 	return bindActionCreators({callApi},dispatch);

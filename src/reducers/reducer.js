@@ -1,31 +1,33 @@
 
-import {fetchUser} from '../action/actions';
+import {fetchUser, fetchRepo, sortData} from '../action/actions';
 const init={
-    query:' ',
-    userData:[]
+    userData:[],
+    repoData:[],
 };
 
 export function rootReducer(state=init,action){
+
     switch(action.type){
         case fetchUser:
-        {   console.log(action.payload.items);
-            return{...state};
+        {   //console.log(action.payload.items);
+            let response=action.payload.items.slice();
+            //console.log(response);
+            return{...state,userData:state.userData.concat(response)};
         }
-        case 'userDataRecieved':
-        {
-           // return{...state,userData:usrdata}
+
+        case fetchRepo:
+        {   let response;
+             response=action.payload.slice();  
+             console.log("resp=",response,"action=",action);
+            return{...state,repoData:state.repoData.concat(response)};
         }
+        case sortData:
+        {   
+            let userData=action.payload.slice();
+            return {...state,userData:userData};
+        }
+
+        default:
+        return state
     }
 }
-// var usrdata;
-//             var url=`https://api.github.com/search/users?q=${action.query}`;
-//             console.log(url);
-
-//             usrdata=(HttpService(url).then(function(response){
-//                 return response.data.items.slice();
-//                 }));
-
-//             console.log("reducer",usrdata);
-
-//             return{...state,userData:usrdata};  
-//             console.log(action.query,'in-reducer');

@@ -1,33 +1,25 @@
 import React from 'react';
-import {HttpService} from './HttpService';
+import { connect }	 from 'react-redux';
+import { bindActionCreators } from '../../../../.cache/typescript/2.9/node_modules/redux';
+import {getRepos} from '../action/actions';
 
-export class Repos extends React.Component{
+class Repos extends React.Component{
 
     constructor(){
         super();
         this.state=({showRepo:false,repoDetails:[]});
         this.repoToggle=this.repoToggle.bind(this);
-        this.getRepoDetails=this.getRepoDetails.bind(this);
         this.renderRepoRecords=this.renderRepoRecords.bind(this);
     }
 
-    repoToggle(){
+    repoToggle(username){
+    console.log(username);
     this.setState({showRepo:!this.state.showRepo});
-    this.getRepoDetails();
+    this.props.repoData.length>0? null:this.props.getRepos(username);
+    
     }
 
-    getRepoDetails(){
-        let self=this;
-        if(this.state.repoDetails.length>0)
-        {return;}
-        let url=`https://api.github.com/users/${this.props.userurl}/repos`;
-        HttpService(url).then(function(response){
-           console.log(response.data);
-           self.setState({repoDetails:response.data
-                });
-            });
-    }
-
+  
     renderRepoRecords(obj){
         return(
             <tr>
@@ -41,21 +33,18 @@ export class Repos extends React.Component{
     render(){
         let Loading=(<tr><th colSpan="2">Loading...</th></tr>);
         let heading=(<tr><th>Repo Name</th><th>Fork Count</th></tr>);
+
         if( this.state.showRepo){
         return(
-            <div >
-                <button onClick={this.repoToggle} className="btn float-right  btn-primary">Collapse</button><br /><br />
-
+            <div key="repodata">
+            <button onClick={this.repoToggle} className="btn float-right  btn-primary">Collapse</button><br /><br />
             <table className="table text-center table-striped">
             <thead>
-            
             </thead>
             <tbody>
             <tr><th colSpan="2">Repositories</th></tr>
-            
-             {(this.state.repoDetails.length === 0) ? Loading:heading} 
-           {/* ()=>(<tr><th colSpan="2">Loading...</th></tr>) */}
-            {this.state.repoDetails.map(this.renderRepoRecords)}
+             {(this.props.repoData.length === 0) ? Loading:heading} 
+            {this.props.repoData.map(this.renderRepoRecords)}
             </tbody>
             </table>
 
@@ -66,13 +55,21 @@ export class Repos extends React.Component{
        else
        {
         return(
-            <button onClick={this.repoToggle}  className="btn float-right btn-primary">Details</button>
+            <button onClick={()=>this.repoToggle(this.props.userurl)}  className="btn float-right btn-primary">Details</button>
         );
        }
-        
-
-    
     }
+}
+
+function mapStateToProps(state){
+    state;
+   return{ repoData: state.rootReducer.repoData};
 
 
 }
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({getRepos},dispatch);
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Repos);

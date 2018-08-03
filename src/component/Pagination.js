@@ -2,15 +2,17 @@ import React from 'react';
 import Pagination from "react-js-pagination";
 // require("bootstrap/less/bootstrap.less");
 import {Card} from './Card';
+import { connect } from 'react-redux';
 
-export class Paginations extends React.Component{
+class Paginations extends React.Component{
     
     constructor(props){
         super(props);
 
-        this.state={activePage:1,
+        this.state={
+        activePage:1,
         lastpage:4,
-        userdata: [],};
+        };
 
         this.onPageClick=this.onPageClick.bind(this);
         this.generatePageLinks=this.generatePageLinks.bind(this);
@@ -59,36 +61,22 @@ export class Paginations extends React.Component{
      render()
     {   let index;
         var content=[];
-      
-      var noofpages= (Math.ceil(this.props.total_results/10));
-      let pagearray=this.pagination(this.state.activePage,noofpages);
+    //   var noofpages= (Math.ceil(this.props.total_results/10));
+    //   let pagearray=this.pagination(this.state.activePage,noofpages);
 
       //console.log("active page "+this.state.activePage+"  array",pagearray);
-        this.state.userdata.sort((a,b)=>{
-            let valueA, valueB;
-            valueA=a.login;
-            valueB=b.login;
-            if(valueA < valueB){
-                return -1;
-            }
-            else if(valueB > valueA){
-                return 1;
-            }
-            else{
-                return 0;
-            }
-        });
+        // 
         
-      content.push(pagearray.map(this.generatePageLinks));
+    //   content.push(pagearray.map(this.generatePageLinks));
 
-        return(
+    return(
         <div>
           <div className="row">
-	            <div className="col-md-4"></div>
-				<div className="col-md-4">
-       { this.state.userdata.length>0 ? (<Card users={this.state.userdata} total_results={this.props.total_results} />) :	(<Card users={this.props.users} total_results={this.props.total_results} />)}
+	            <div className="col-md-3"></div>
+				<div className="col-md-6">
+                <Card users={this.props.users}  total_results={this.props.users.length}/>
 				</div>
-				<div className="col-md-4"></div>
+				<div className="col-md-3"></div>
 			</div>
           
           <ul className="pagination float-right">
@@ -97,16 +85,17 @@ export class Paginations extends React.Component{
         {/* <li  className="page-item " ><a  onClick={this.onPageClick} className="page-link"  >Next</a></li> */}
         </ul> </div>
         );
-   
     }
-    
+}//class
 
+function mapStateToProps(state){
+    return{
+        users:state.rootReducer.userData
+    };
 }
+export default connect(mapStateToProps,null)(Paginations);
 
-     // for (index = 1; index <= (noofpages > 6 ? 6 :noofpages) ; index ++) {
-        
-      //   if(index < 5){
-      //     content.push(this.generatePageLinks(index,index));
-      //   }
-      //   else{
-      //     content.push(<li  className="page-item " ><+
+
+
+
+    

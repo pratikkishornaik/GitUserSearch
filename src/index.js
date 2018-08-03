@@ -12,11 +12,14 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import {rootReducer} from './reducers/reducer';
 import App from './App';
-import promise from 'redux-promise';
 import thunk from 'redux-thunk';
-//,
+import { combineReducers} from 'redux';
+
+const mainReducer=combineReducers({
+    rootReducer:rootReducer,
+  });
 
 const createStoreWithMiddleware=applyMiddleware(thunk)(createStore);
 
 
-ReactDOM.render(<Provider store={createStoreWithMiddleware(rootReducer)}><App /></Provider>,document.getElementById('root'));
+ReactDOM.render(<Provider store={createStoreWithMiddleware(mainReducer)}><App /></Provider>,document.getElementById('root'));
