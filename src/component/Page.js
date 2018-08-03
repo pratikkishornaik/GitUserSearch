@@ -16,7 +16,7 @@ import Paginations from './Pagination';
                 <Search />
               </ul>
             </nav>
-            <div className="jumbotron bg-light" >
+            <div  >
 			<Paginations/>
             </div>
         </div>

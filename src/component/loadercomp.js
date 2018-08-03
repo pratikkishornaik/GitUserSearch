@@ -1,13 +1,12 @@
 import React from 'react';
-
-
-
+import logo from '../2.gif';
 
 const Loader=()=>{
     return(
-        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" alt="loadgif" />
-
+       <div> 
+           <br/><br/><br/><br/><br/>
+        <center><img src={logo} alt="Loading Logo"/></center>
+        </div>
     );
 }
-
 export default Loader;

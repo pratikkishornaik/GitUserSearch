@@ -35,7 +35,7 @@
 
   render(){
     let loadcomp=(< Loader />);
-    var total_count=(<span><strong>Total Results: {this.props.total_results} </strong></span>);
+    var total_count=(<span><br /><strong>Total Results: {this.props.total_results} </strong><br /></span>);
 
     return(
       <div>
