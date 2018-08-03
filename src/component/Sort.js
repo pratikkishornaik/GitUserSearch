@@ -12,16 +12,22 @@ class Sort extends React.Component{
 
 
   render(){
-		return(
-			<select className="form-control" onChange={this.handleSelection.bind(this)} > 
-                    <option value="sortByAZ">Name (A-Z)</option>
-                    <option value="sortByZA">Name (Z-A)</option>
-                    <option value="sortByRankAsc">Rank ascending</option>
-                    <option value="sortByRankDec">Rank descending</option>
-                  </select>
-			);
+
+    if(this.props.userData.length===0){
+      return(<div> </div>);
+
+    }
+    else{
+        return(
+          <select  className="form-control" onChange={this.handleSelection.bind(this)} > 
+                        <option value="sortByAZ">Name (A-Z)</option>
+                        <option value="sortByZA">Name (Z-A)</option>
+                        <option value="sortByRankAsc">Rank ascending</option>
+                        <option value="sortByRankDec">Rank descending</option>
+                      </select>
+          );
+        }
   }
-  
 }//class 
 
 function mapStateToProps(state){

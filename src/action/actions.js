@@ -3,6 +3,7 @@ import axios from 'axios';
 export const fetchUser='fetchUser';
 export const fetchRepo='fetchRepo';
 export const sortData='sortData';
+export const loader='callLoader';
 
 const URL=`https://api.github.com/search/users`;
 
@@ -80,7 +81,7 @@ export function callApi(query) {
         return{type:sortData,payload:userData};
         }
         
-        case 'sortByRankDec':{
+        case 'sortByRafetchUsernkDec':{
           userData.sort((a,b)=>{
             let valueA,valueB
             valueA=a.score;
@@ -94,7 +95,6 @@ export function callApi(query) {
             if(valueB==valueA){
               return 0;
             }
-            
           });
         return{type:sortData,payload:userData};
         }
@@ -107,6 +107,12 @@ export function callApi(query) {
     
   }
 
+export function callLoader(){
 
+    return {type:loader,
+            loading:true,
+    }
+  
+}
 
 

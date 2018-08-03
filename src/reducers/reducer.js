@@ -1,8 +1,9 @@
 
-import {fetchUser, fetchRepo, sortData} from '../action/actions';
+import {fetchUser, fetchRepo, sortData, loader} from '../action/actions';
 const init={
     userData:[],
     repoData:[],
+    loading:false,
 };
 
 export function rootReducer(state=init,action){
@@ -11,8 +12,7 @@ export function rootReducer(state=init,action){
         case fetchUser:
         {   //console.log(action.payload.items);
             let response=action.payload.items.slice();
-            //console.log(response);
-            return{...state,userData:state.userData.concat(response)};
+            return{...state,userData:(response),loading:false};
         }
 
         case fetchRepo:
@@ -25,6 +25,11 @@ export function rootReducer(state=init,action){
         {   
             let userData=action.payload.slice();
             return {...state,userData:userData};
+        }
+        
+        case loader:
+        {
+            return{...state,loading:true};
         }
 
         default:

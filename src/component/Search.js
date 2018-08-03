@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect }	 from 'react-redux';
 import { callApi } from '../action/actions';
+import { callLoader } from '../action/actions';
 import{bindActionCreators} from 'redux';
 
 class Search extends React.Component{
@@ -8,21 +9,26 @@ class Search extends React.Component{
 		constructor(props)
 		{
 			super(props);
+			this.state={
+				loading:false,
+			}
 			this.handleClick=this.handleClick.bind(this);
 		}
 
-	 handleClick(){
+	 handleClick(e){
+		e.preventDefault();
+		this.props.callLoader();
+		this.props.callApi(document.getElementById('textbox').value);
 		
 	}
 
 	render(){
 		return(
 			<form 
-			onSubmit={(e)=>{e.preventDefault();
-			this.props.callApi(document.getElementById('textbox').value)}}>
+			onSubmit={this.handleClick}>
 			<span>
 			<li className="nav-item">
-	        <input type="text" id="textbox" placeholder="Enter UserName"  className="form-control"/>
+	        <input required type="text" id="textbox" placeholder="Enter UserName"  className="form-control"/>
 	        <input type="submit" className="btn btn-success float-right" value="Search" />
 	        </li>
 	        </span>
@@ -32,12 +38,12 @@ class Search extends React.Component{
 }
 
 // function mapStateToProps(state){
-// 		return{userData:state};
+// 		return{userData:state.rootReducer.userData};
 // }
 
 function mapDispatchToProps(dispatch){
 
-	return bindActionCreators({callApi},dispatch);
+	return bindActionCreators({callApi:callApi,callLoader:callLoader},dispatch);
 }
 
 export default connect(null,mapDispatchToProps)(Search);

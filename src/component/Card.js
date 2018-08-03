@@ -1,22 +1,11 @@
   import React from 'react';
   import Repos from './Repos';
-
+  import Loader from './loadercomp';
   export class Card extends React.Component{
     constructor(){
       super();
       this.renderComponents=this.renderComponents.bind(this); 
-      this.getName=this.getName.bind(this);
     }
-
-  getName(username){
-  //  let self=this;
-   
-    // HttpService(url).then(function(response){
-    //     console.log(response);
-    //     return response.data.name;
-    // });
-  }
-
 
     renderComponents(obj)
   {   
@@ -45,12 +34,15 @@
   
 
   render(){
-
+    let loadcomp=(< Loader />);
     var total_count=(<span><strong>Total Results: {this.props.total_results} </strong></span>);
+
     return(
       <div>
-    {this.props.total_results!=0 ? (total_count): (null)}
-    {this.props.users.map(this.renderComponents)}
+      <loader />
+      {this.props.loading?loadcomp: null}
+      {this.props.total_results!=0 ? total_count:(null) }
+      {this.props.users.map(this.renderComponents)}
     </div>
     );
   }

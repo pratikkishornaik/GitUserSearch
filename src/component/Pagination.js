@@ -1,6 +1,4 @@
 import React from 'react';
-import Pagination from "react-js-pagination";
-// require("bootstrap/less/bootstrap.less");
 import {Card} from './Card';
 import { connect } from 'react-redux';
 
@@ -29,6 +27,7 @@ class Paginations extends React.Component{
        this.setState({activePage:e.target.text});
 
     }
+
     pagination(c, m) {
       var current = c,
 
@@ -60,21 +59,20 @@ class Paginations extends React.Component{
   
      render()
     {   let index;
-        var content=[];
-    //   var noofpages= (Math.ceil(this.props.total_results/10));
-    //   let pagearray=this.pagination(this.state.activePage,noofpages);
-
-      //console.log("active page "+this.state.activePage+"  array",pagearray);
-        // 
-        
-    //   content.push(pagearray.map(this.generatePageLinks));
-
+     var content=[];
+      var noofpages= (Math.ceil(this.props.users.length/10));
+      let pagearray=this.pagination(this.state.activePage,noofpages);
+    //   console.log("active page "+this.state.activePage+"  array",pagearray);
+        content.push(pagearray.map(this.generatePageLinks));
+      
     return(
         <div>
+            
           <div className="row">
 	            <div className="col-md-3"></div>
 				<div className="col-md-6">
-                <Card users={this.props.users}  total_results={this.props.users.length}/>
+               
+                <Card users={this.props.users} loading={this.props.loading} total_results={this.props.users.length}/>
 				</div>
 				<div className="col-md-3"></div>
 			</div>
@@ -90,7 +88,8 @@ class Paginations extends React.Component{
 
 function mapStateToProps(state){
     return{
-        users:state.rootReducer.userData
+        users:state.rootReducer.userData,
+        loading:state.rootReducer.loading
     };
 }
 export default connect(mapStateToProps,null)(Paginations);

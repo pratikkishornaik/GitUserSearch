@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect }	 from 'react-redux';
-import { bindActionCreators } from '../../../../.cache/typescript/2.9/node_modules/redux';
+import { bindActionCreators } from 'redux';
 import {getRepos} from '../action/actions';
 
 class Repos extends React.Component{
@@ -13,22 +13,20 @@ class Repos extends React.Component{
     }
 
     repoToggle(username){
-    console.log(username);
+    // console.log(username);
     this.setState({showRepo:!this.state.showRepo});
-    this.props.repoData.length>0? null:this.props.getRepos(username);
+    (this.props.repoData.length>0 ? null:this.props.getRepos(username));
     
     }
-
   
     renderRepoRecords(obj){
         return(
-            <tr>
+            <tr key={obj.name}>
                <td><a href={obj.html_url} target="_blank">{obj.name}</a></td>
                <td>{obj.forks_count}</td>
             </tr>
         );
     }
-
 
     render(){
         let Loading=(<tr><th colSpan="2">Loading...</th></tr>);
