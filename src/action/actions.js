@@ -7,7 +7,7 @@ export const loader='callLoader';
 
 const URL=`https://api.github.com/search/users?per_page=10`;
 
-export function callApi(query) {
+export function callApi(query,pageno) {
   console.log("call API",query);
   let request=axios.get(`${URL}&q=${query}`);
     return(dispatch)=>{
@@ -17,6 +17,7 @@ export function callApi(query) {
           type:fetchUser,
           payload:data,
           query:query,
+          activePage:pageno
         })
       })
     }

@@ -18,7 +18,7 @@ class Search extends React.Component{
 	 handleClick(e){
 		e.preventDefault();
 		this.props.callLoader(document.getElementById('textbox').value);
-		this.props.callApi(document.getElementById('textbox').value);
+		this.props.callApi(document.getElementById('textbox').value,1);
 		
 	}
 

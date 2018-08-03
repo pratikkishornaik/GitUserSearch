@@ -6,6 +6,7 @@ const init={
     loading:false,
     total_results:0,
     query:' ',
+    activePage:1,
 };
 
 export function rootReducer(state=init,action){
@@ -15,7 +16,12 @@ export function rootReducer(state=init,action){
         case fetchUser:
         {   
             let response=action.payload.items.slice();
-            return{...state,userData:(response),loading:false,total_results:action.payload.total_count,query:action.query};
+            return{...state,userData:(response),
+                loading:false,
+                total_results:action.payload.total_count,
+                query:action.query,
+                activePage:action.activePage,
+            };
         }
 
         case fetchRepo:

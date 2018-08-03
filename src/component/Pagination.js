@@ -2,27 +2,27 @@ import React from 'react';
 import {Card} from './Card';
 import { connect } from 'react-redux';
 import Loader from './loadercomp';
+import { callApi } from '../action/actions';
+import { bindActionCreators } from 'redux';
+
 class Paginations extends React.Component{
 
     constructor(props){
         super(props);
-        
         this.state={
-        activePage:1,
         lastpage:4,};
-
         this.onPageClick=this.onPageClick.bind(this);
         this.generatePageLinks=this.generatePageLinks.bind(this);
     }
    
     generatePageLinks(index){
-        return(this.state.activePage==index ? (<li key={index} className="page-item active" ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>):
+        return(this.props.activePage==index ? (<li key={index} className="page-item active" ><a key={index} onClick={this.onPageClick} className="page-link"  >{index}</a></li>):
         (<li key={index} className="page-item " ><a key={index} onClick={()=>this.onPageClick(index)} className="page-link"  >{index}</a></li>));                        
     }
     
     onPageClick(e){
     console.log("index",e);
-    this.setState({activePage:e});
+        this.props.callApi(this.props.query,e);
     }
 
     pagination(c, m) {
@@ -57,7 +57,7 @@ class Paginations extends React.Component{
     {   
         var content=[];
         var noofpages= (Math.ceil(this.props.total_results/10));
-        let pagearray=this.pagination(this.state.activePage,noofpages);
+        let pagearray=this.pagination(this.props.activePage,noofpages);
         content.push(pagearray.map(this.generatePageLinks));
         let card=(
                     <div>
@@ -88,9 +88,15 @@ function mapStateToProps(state){
         users:state.rootReducer.userData,
         loading:state.rootReducer.loading,
         total_results:state.rootReducer.total_results,
+        activePage:state.rootReducer.activePage,
     };
 }
-export default connect(mapStateToProps,null)(Paginations);
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({callApi},dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Paginations);
 
 
 
