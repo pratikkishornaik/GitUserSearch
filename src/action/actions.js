@@ -37,8 +37,8 @@ export function callApi(query) {
 
   export function sortUserData(sorttype,userData){
       switch(sorttype){
- 
-        case 'sortByAZ':{
+
+          case 'sortByAZ':{
           userData.sort((a,b)=>{
                 let valueA, valueB;
                 valueA=a.login;
