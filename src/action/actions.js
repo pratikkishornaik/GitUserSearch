@@ -8,8 +8,8 @@ export const loader='callLoader';
 const URL=`https://api.github.com/search/users?per_page=10`;
 
 export function callApi(query,pageno) {
-  console.log("call API",query);
-  let request=axios.get(`${URL}&q=${query}`);
+  console.log(`${URL}&q=${query}&page=${pageno}`,query);
+  let request=axios.get(`${URL}&q=${query}&page=${pageno}`);
     return(dispatch)=>{
       request.then(({data})=>{
         console.log(data);

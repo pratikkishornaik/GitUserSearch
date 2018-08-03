@@ -22,7 +22,8 @@ class Paginations extends React.Component{
     
     onPageClick(e){
     console.log("index",e);
-        this.props.callApi(this.props.query,e);
+    if (e!='...')
+    this.props.callApi(this.props.query,e);
     }
 
     pagination(c, m) {
@@ -89,13 +90,13 @@ function mapStateToProps(state){
         loading:state.rootReducer.loading,
         total_results:state.rootReducer.total_results,
         activePage:state.rootReducer.activePage,
+        query:state.rootReducer.query,
     };
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({callApi},dispatch);
 }
-
 export default connect(mapStateToProps,mapDispatchToProps)(Paginations);
 
 
