@@ -1,5 +1,5 @@
 
-import {fetchUser, fetchRepo, sortData, loader} from '../action/actions';
+import {fetchUser, fetchRepo, sortData, loader,discardRepoData} from '../action/actions';
 const init={
     userData:[],
     repoData:[],
@@ -28,7 +28,7 @@ export function rootReducer(state=init,action){
         {   
             let response;
             response=action.payload.slice();  
-            return{...state,repoData:state.repoData.concat(response)};
+            return{...state,repoData:(response)};
         }
         case sortData:
         {   
@@ -39,6 +39,11 @@ export function rootReducer(state=init,action){
         case loader:
         {
             return{...state,loading:true};
+        }
+
+        case discardRepoData:
+        {
+            return{...state,repoData:[]};
         }
 
         default:

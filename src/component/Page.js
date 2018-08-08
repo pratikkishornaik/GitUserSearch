@@ -22,8 +22,6 @@ import Paginations from './Pagination';
      );
 	}
 }//class
-
-
 function mapStateToProps(state){
   return{}
 }

@@ -1,11 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -20,6 +12,5 @@ const mainReducer=combineReducers({
   });
 
 const createStoreWithMiddleware=applyMiddleware(thunk)(createStore);
-
 
 ReactDOM.render(<Provider store={createStoreWithMiddleware(mainReducer)}><App /></Provider>,document.getElementById('root'));

@@ -4,6 +4,7 @@ export const fetchUser='fetchUser';
 export const fetchRepo='fetchRepo';
 export const sortData='sortData';
 export const loader='callLoader';
+export const discardRepoData='discardRepo';
 
 const URL=`https://api.github.com/search/users?per_page=10`;
 
@@ -34,6 +35,10 @@ export function callApi(query,pageno) {
         })
       });
     }
+  }
+
+  export function discardRepo(){
+    return{type:discardRepoData}
   }
 
   export function sortUserData(sorttype,userData){

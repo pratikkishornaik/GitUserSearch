@@ -1,22 +1,22 @@
 import React from 'react';
 import { connect }	 from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {getRepos} from '../action/actions';
+import {getRepos,discardRepo} from '../action/actions';
 
 class Repos extends React.Component{
 
     constructor(){
         super();
-        this.state=({showRepo:false,repoDetails:[]});
+        this.state=({showRepo:false,toggled:false,repoDetails:[]});
         this.repoToggle=this.repoToggle.bind(this);
         this.renderRepoRecords=this.renderRepoRecords.bind(this);
     }
-
-    repoToggle(username){
-    // console.log(username);
-    this.setState({showRepo:!this.state.showRepo});
-    (this.props.repoData.length>0 ? null:this.props.getRepos(username));
     
+    repoToggle(username){
+        // this.state.showRepo?this.props.discardRepo():null;
+        this.setState({showRepo:!this.state.showRepo});
+        console.log(typeof username);
+        (typeof username)=="string"? this.props.getRepos(username):null
     }
   
     renderRepoRecords(obj){
@@ -37,8 +37,6 @@ class Repos extends React.Component{
             <div key="repodata">
             <button onClick={this.repoToggle} className="btn float-right  btn-primary">Collapse</button><br /><br />
             <table className="table text-center table-striped">
-            <thead>
-            </thead>
             <tbody>
             <tr><th colSpan="2">Repositories</th></tr>
              {(this.props.repoData.length === 0) ? Loading:heading} 
@@ -62,11 +60,9 @@ class Repos extends React.Component{
 function mapStateToProps(state){
     state;
    return{ repoData: state.rootReducer.repoData};
-
-
 }
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({getRepos},dispatch);
+    return bindActionCreators(({getRepos:getRepos,discardRepo:discardRepo}),dispatch);
 }
 
 

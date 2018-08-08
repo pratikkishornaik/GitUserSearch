@@ -20,7 +20,7 @@ class Sort extends React.Component{
     }
     else{
         return(
-          <nav className="navbar navbar-expand-sm bg-light justify-content-left">
+          <nav className="navbar navbar-expand-sm bg-light ">
                 <span className="nav-text">
                 Sort By:
                 </span>
