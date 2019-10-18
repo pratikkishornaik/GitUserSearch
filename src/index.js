@@ -1,16 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import {rootReducer} from './reducers/reducer';
-import App from './App';
-import thunk from 'redux-thunk';
-import { combineReducers} from 'redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import App from "./App";
+import { store } from "./redux/store";
 
-const mainReducer=combineReducers({
-    rootReducer:rootReducer,
-  });
-
-const createStoreWithMiddleware=applyMiddleware(thunk)(createStore);
-
-ReactDOM.render(<Provider store={createStoreWithMiddleware(mainReducer)}><App /></Provider>,document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
